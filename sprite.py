@@ -31,6 +31,7 @@ class Player(pygame.sprite.Sprite):
 
     def collision(self):
         touch = pygame.sprite.spritecollideany(self, self.level)
+        return touch
 
     def load(self):
         self.surface.blit(self.image, (self.x, self.y))
