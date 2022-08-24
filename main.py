@@ -45,6 +45,7 @@ while running:
         print("colliding")
         player.gravity(0)
     else:
+        print("not colliding")
         player.gravity(1)
     player.update()
 
