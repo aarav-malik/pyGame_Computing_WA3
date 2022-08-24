@@ -1,11 +1,10 @@
 import pygame
 import colours
-import map
 
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self, ppos, surface,level):
+    def __init__(self, ppos, surface, level):
         pygame.sprite.Sprite.__init__(self)
         self.level = level
         self.sprites = pygame.sprite.Group()
@@ -33,13 +32,5 @@ class Player(pygame.sprite.Sprite):
         return touch
 
     def load(self):
+        self.surface.blit(self.image, (self.x, self.y), self.rect)
         self.surface.blit(self.image, (self.x, self.y))
-
-
-
-
-
-
-
-
-
