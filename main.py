@@ -41,7 +41,7 @@ while running:
     draw_bg()
     level1.run()
     player.load()
-    if player.collision:
+    if player.collision():
         print(1)
         player.gravity(0)
     else:
