@@ -1,12 +1,14 @@
 import pygame
 import colours
 import map
+import main
 
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self, ppos, surface):
+    def __init__(self, ppos, surface,level):
         pygame.sprite.Sprite.__init__(self)
+        self.level = level
         self.sprites = pygame.sprite.Group()
         self.surface = surface
         self.state = "idle"
@@ -29,12 +31,12 @@ class Player(pygame.sprite.Sprite):
         self.y += self.strength
 
     def collision(self):
-        touch = pygame.sprite.spritecollideany(self,)
+        touch = pygame.sprite.spritecollideany(self, self.level)
         if touch:
             print("ok")
 
     def load(self):
-        # self.collision()
+        self.collision()
         self.surface.blit(self.image, (self.x, self.y))
 
 
