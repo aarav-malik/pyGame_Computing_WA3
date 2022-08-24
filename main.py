@@ -41,7 +41,8 @@ while running:
     draw_bg()
     level1.run()
     player.load()
-    player.gravity(1)
+    if not(player.collision):
+        player.gravity(1)
     player.update()
 
     key = pygame.key.get_pressed()
