@@ -27,11 +27,15 @@ class Player(pygame.sprite.Sprite):
         self.strength = strength
         self.y += self.strength
 
+    def jump(self):
+        if pygame.key.get_pressed()[pygame.K_SPACE]:
+            self.y -= 10
+
     def collision(self):
-        touch = pygame.sprite.spritecollideany(self, self.level)
+        touch = pygame.sprite.spritecollide(self, self.level, False)
         return touch
 
-    def load(self):
-        # pygame.draw.rect(self.surface,(255,255,255), self.rect,2)
+    def update(self):
+        self.jump()
         self.surface.blit(self.image, (self.x, self.y))
-        self.surface.blit(self.image, (self.x, self.y))
+        self.rect = self.image.get_rect(topleft=(self.x, self.y))
