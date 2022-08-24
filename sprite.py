@@ -25,7 +25,6 @@ class Player(pygame.sprite.Sprite):
             self.stage = num
 
     def gravity(self, strength):
-        super().__init__()
         self.strength = strength
         self.y += self.strength
 
