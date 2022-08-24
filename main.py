@@ -42,7 +42,7 @@ while running:
     level1.run()
     player.load()
     if player.collision():
-        print(1)
+        print("colliding")
         player.gravity(0)
     else:
         player.gravity(1)
