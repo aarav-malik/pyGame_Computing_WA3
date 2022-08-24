@@ -34,7 +34,7 @@ class Player(pygame.sprite.Sprite):
             print("ok")
 
     def load(self):
-        self.collision()
+        # self.collision()
         self.surface.blit(self.image, (self.x, self.y))
 
 
