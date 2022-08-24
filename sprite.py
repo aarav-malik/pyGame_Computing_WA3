@@ -1,7 +1,6 @@
 import pygame
 import colours
 import map
-import main
 
 
 class Player(pygame.sprite.Sprite):
@@ -33,7 +32,7 @@ class Player(pygame.sprite.Sprite):
     def collision(self):
         touch = pygame.sprite.spritecollideany(self, self.level)
         if touch:
-            print("ok")
+            self.strength = 0
 
     def load(self):
         self.collision()

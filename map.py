@@ -27,6 +27,9 @@ class Level:
                     tile = Tile((x, y), tile_size, tile_type)
                     self.tiles.add(tile)
 
+    def __iter__(self):
+        return iter(self.tiles)
+
     def scroll(self):
         if pygame.key.get_pressed()[pygame.K_LEFT]:
             self.world_shift = 1

@@ -14,7 +14,7 @@ logo = pygame.image.load("Graphics/logo.png")
 pygame.display.set_icon(logo)
 
 level1 = Level(tile_data, screen)
-player = Player((50, 170), screen,level1)
+player = Player((50, 170), screen, level1.tiles)
 
 bg_images = []
 for i in range(1, 6):
