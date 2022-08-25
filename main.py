@@ -40,12 +40,13 @@ while running:
 
     draw_bg()
     level1.run()
+    level1.takein(player.collision())
 
     if player.collision():
-        print("colliding")
+        # print("colliding")
         player.gravity(0)
     else:
-        print("not colliding")
+        # print("not colliding")
         player.gravity(10)
     player.update()
 

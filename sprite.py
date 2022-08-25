@@ -31,7 +31,7 @@ class Player(pygame.sprite.Sprite):
         self.y += self.strength
 
     def collision(self):
-        touch = pygame.sprite.spritecollide(self, self.level, False)
+        touch = pygame.sprite.spritecollide(self, self.level,False)
         if touch:
             self.inair = False
         else:
@@ -42,6 +42,7 @@ class Player(pygame.sprite.Sprite):
         if pygame.key.get_pressed()[pygame.K_SPACE] and not self.inair:
             self.y -= 100
         if pygame.key.get_pressed()[pygame.K_RIGHT]:
+            time.sleep(0.001)
             self.stage = random.randint(1, 8)
 
     def update(self):
@@ -49,3 +50,4 @@ class Player(pygame.sprite.Sprite):
         self.animate()
         self.surface.blit(self.image, (self.x, self.y))
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
+        pygame.draw.rect(self.surface, colours.white, self.rect, 2)

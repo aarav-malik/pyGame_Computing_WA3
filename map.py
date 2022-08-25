@@ -30,11 +30,14 @@ class Level:
     def __iter__(self):
         return iter(self.tiles)
 
+    def takein(self, collided):
+        self.collided = collided
+
     def scroll(self):
         if pygame.key.get_pressed()[pygame.K_LEFT]:
             self.world_shift = 2
         elif pygame.key.get_pressed()[pygame.K_RIGHT]:
-            self.world_shift = -2
+            self.world_shift = -10
         else:
             self.world_shift = 0
 
