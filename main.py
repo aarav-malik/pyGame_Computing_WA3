@@ -7,7 +7,7 @@ from sprite import *
 
 scroll = 0
 
-screen = pygame.display.set_mode((900, 323))
+screen = pygame.display.set_mode((1800, 646))
 
 pygame.display.set_caption("Industrial")
 logo = pygame.image.load("Graphics/logo.png")
@@ -28,7 +28,7 @@ def draw_bg():
         speed = 0.3
         for bg in bg_images:
             screen.blit(bg, ((x * bg_width) - scroll * speed, 0))
-            speed += 0.3
+            speed += 1
 
 
 running = True
@@ -46,7 +46,7 @@ while running:
         player.gravity(0)
     else:
         print("not colliding")
-        player.gravity(2)
+        player.gravity(10)
     player.update()
 
     key = pygame.key.get_pressed()

@@ -6,7 +6,7 @@ tile_map = open("tiled.csv")
 file_reader = csv.reader(tile_map)
 tile_data = list(file_reader)
 print(tile_data)
-tile_size = 30
+tile_size = 60
 
 
 class Level:
@@ -20,7 +20,7 @@ class Level:
         for row_index, row in enumerate(layout):
             for col_index, cell in enumerate(row):
                 x = col_index * tile_size
-                y = row_index * tile_size + 110
+                y = row_index * tile_size + 225
 
                 if cell != "-1":
                     tile_type = cell
@@ -32,9 +32,9 @@ class Level:
 
     def scroll(self):
         if pygame.key.get_pressed()[pygame.K_LEFT]:
-            self.world_shift = 1
+            self.world_shift = 2
         elif pygame.key.get_pressed()[pygame.K_RIGHT]:
-            self.world_shift = -1
+            self.world_shift = -2
         else:
             self.world_shift = 0
 
