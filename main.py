@@ -40,14 +40,14 @@ while running:
 
     draw_bg()
     level1.run()
-    player.update()
 
     if player.collision():
         print("colliding")
         player.gravity(0)
     else:
         print("not colliding")
-        player.gravity(1)
+        player.gravity(2)
+    player.update()
 
     key = pygame.key.get_pressed()
     if key[pygame.K_LEFT] and scroll > 0:

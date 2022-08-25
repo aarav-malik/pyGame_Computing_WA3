@@ -1,11 +1,13 @@
 import pygame
 import colours
+import time
 
 
 class Player(pygame.sprite.Sprite):
 
     def __init__(self, ppos, surface, level):
         pygame.sprite.Sprite.__init__(self)
+        self.inair = False
         self.level = level
         self.sprites = pygame.sprite.Group()
         self.surface = surface
@@ -27,13 +29,19 @@ class Player(pygame.sprite.Sprite):
         self.strength = strength
         self.y += self.strength
 
-    def jump(self):
-        if pygame.key.get_pressed()[pygame.K_SPACE]:
-            self.y -= 10
-
     def collision(self):
         touch = pygame.sprite.spritecollide(self, self.level, False)
+        if touch:
+            self.inair = False
+        else:
+            self.inair = True
         return touch
+
+    def jump(self):
+        if pygame.key.get_pressed()[pygame.K_SPACE] and not self.inair:
+            self.y -= 25
+            self.y -= 15
+            self.y -= 10
 
     def update(self):
         self.jump()
