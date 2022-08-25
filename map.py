@@ -45,4 +45,5 @@ class Level:
         self.tiles.update(self.world_shift)
         self.tiles.draw(self.display_surface)
         self.scroll()
+        print(self.tiles)
 

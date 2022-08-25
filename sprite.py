@@ -22,7 +22,7 @@ class Player(pygame.sprite.Sprite):
 
     def animate(self):
         self.image = pygame.image.load("Graphics/robot {}/{}{}.png".format(self.state, self.state, self.stage))
-        self.image = pygame.transform.scale(self.image, (100, 100))
+        self.image = pygame.transform.scale(self.image, (75, 75))
         self.rect = self.image.get_rect(topleft=self.ppos)
         self.image.set_colorkey(colours.green)
 
