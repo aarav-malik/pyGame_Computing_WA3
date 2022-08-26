@@ -3,11 +3,12 @@ from map import *
 import sprite
 import colours
 from sprite import *
-
+from pygame.locals import *
+from pygame import mixer
 
 scroll = 0
 
-screen = pygame.display.set_mode((1800, 646))
+screen = pygame.display.set_mode((1300, 646))
 
 pygame.display.set_caption("Industrial")
 logo = pygame.image.load("Graphics/logo.png")
@@ -30,6 +31,11 @@ def draw_bg():
             screen.blit(bg, ((x * bg_width) - scroll * speed, 0))
             speed += 1
 
+
+mixer.init()
+background_music = mixer.music.load("backgroundmusic.wav")
+pygame.mixer.music.set_volume(0.2)
+mixer.music.play()
 
 running = True
 while running:

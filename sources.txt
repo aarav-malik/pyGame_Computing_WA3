@@ -2,3 +2,4 @@ icon = <a href='https://dryicons.com/icon/atom-icon-5761'> Icon by Dryicons </a>
 tiles and graphics = https://craftpix.net/
 reference = https://github.com/clear-code-projects/2D-Mario-style-platformer
 sprites = https://penusbmic.itch.io/sci-fi-character-pack-12
+music = https://tallbeard.itch.io/music-loop-bundle
