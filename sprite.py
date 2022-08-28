@@ -10,6 +10,7 @@ class Player(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.ppos = ppos
         self.inair = False
+        self.collideright = False
         self.level = level
         self.sprites = pygame.sprite.Group()
         self.surface = surface

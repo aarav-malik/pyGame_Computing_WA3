@@ -33,7 +33,7 @@ def draw_bg():
 
 
 mixer.init()
-background_music = mixer.music.load("backgroundmusic.wav")
+mixer.music.load("backgroundmusic.wav")
 pygame.mixer.music.set_volume(0.2)
 mixer.music.play()
 
