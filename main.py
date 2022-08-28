@@ -15,11 +15,12 @@ pygame.display.set_caption("Industrial")
 logo = pygame.image.load("Graphics/logo.png")
 pygame.display.set_icon(logo)
 
-level1 = Level(tile_data, screen)
-player = Player((50, 40), screen, level1.tiles)
 portals = pygame.sprite.Group()
-portal = Portal(300, 300)
+portal = Portal(300, 300, screen)
 portals.add(portal)
+
+level1 = Level(tile_data, screen)
+player = Player((50, 40), screen, level1.tiles, portals)
 
 bg_images = []
 for i in range(1, 6):
@@ -50,10 +51,13 @@ while running:
 
     draw_bg()
     level1.run()
-    level1.takein(player.collision())
-    # portals.draw(screen)
-    portals.update(0.25)
-    portal.run()
+
+    if scroll > 10:
+        portals.draw(screen)
+        portals.update(0.25)
+        portal.run()
+        if player.portalcollision():
+            print(1)
 
     if player.collision():
         # print("colliding")

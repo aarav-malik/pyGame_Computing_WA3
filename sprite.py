@@ -6,12 +6,13 @@ import random
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self, ppos, surface, level):
+    def __init__(self, ppos, surface, level, portals):
         pygame.sprite.Sprite.__init__(self)
         self.ppos = ppos
         self.inair = False
         self.collideright = False
         self.level = level
+        self.portal = portals
         self.sprites = pygame.sprite.Group()
         self.surface = surface
         self.state = "move"
@@ -39,6 +40,11 @@ class Player(pygame.sprite.Sprite):
             self.inair = True
         return touch
 
+    def portalcollision(self):
+        enter = pygame.sprite.spritecollideany(self, self.portal)
+        if enter:
+            print(1)
+        return enter
 
     def jump(self):
         if pygame.key.get_pressed()[pygame.K_SPACE] and not self.inair:
@@ -52,4 +58,4 @@ class Player(pygame.sprite.Sprite):
         self.animate()
         self.surface.blit(self.image, (self.x, self.y))
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
-        # pygame.draw.rect(self.surface, colours.white, self.rect, 2)
+        pygame.draw.rect(self.surface, colours.white, self.rect, 2)
