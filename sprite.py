@@ -26,9 +26,10 @@ class Player(pygame.sprite.Sprite):
         self.stage = stage
 
     def animate(self):
+        super().__init__()
         self.image = pygame.image.load("Graphics/robot {}/{}{}.png".format(self.state, self.state, self.stage))
         self.image = pygame.transform.scale(self.image, (75, 75))
-        self.rect = self.image.get_rect(topleft=self.ppos)
+        self.rect = self.image.get_bounding_rect()
         self.image.set_colorkey(colours.green)
 
     def gravity(self, strength):
@@ -45,8 +46,6 @@ class Player(pygame.sprite.Sprite):
 
     def portalcollision(self):
         enter = pygame.sprite.spritecollideany(self, self.portal)
-        if enter:
-            print(1)
         return enter
 
     def jump(self):
@@ -61,4 +60,4 @@ class Player(pygame.sprite.Sprite):
         self.animate()
         self.surface.blit(self.image, (self.x, self.y))
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
-        # pygame.draw.rect(self.surface, colours.white, self.rect, 2)
+        pygame.draw.rect(self.surface, colours.white, self.rect, 2)

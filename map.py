@@ -12,7 +12,7 @@ tile_size = 60
 class Level:
     def __init__(self, level_data, surface):
         self.tiles = pygame.sprite.Group()
-        self.display_surface = surface
+        self.surface = surface
         self.setup_level(level_data)
         self.world_shift = 0
 
@@ -43,6 +43,6 @@ class Level:
 
     def run(self):
         self.tiles.update(self.world_shift)
-        self.tiles.draw(self.display_surface)
+        self.tiles.draw(self.surface)
         self.scroll()
 

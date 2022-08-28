@@ -20,7 +20,7 @@ portal = Portal(300, 300, screen)
 portals.add(portal)
 
 level1 = Level(tile_data, screen)
-player = Player((50, 40), screen, level1.tiles, portals)
+player = Player((60, 300), screen, level1.tiles, portals)
 
 bg_images = []
 for i in range(1, 6):
@@ -40,7 +40,7 @@ def draw_bg():
 mixer.init()
 mixer.music.load("backgroundmusic.wav")
 pygame.mixer.music.set_volume(0.2)
-mixer.music.play(5)
+mixer.music.play(100)
 
 running = True
 while running:
@@ -72,7 +72,7 @@ while running:
     key = pygame.key.get_pressed()
     if key[pygame.K_LEFT] and scroll > 0:
         scroll -= 1
-    if key[pygame.K_RIGHT] and scroll < 3000:
+    if key[pygame.K_RIGHT] and scroll < 3000 and player.collision() is None:
         scroll += 1
         index += 1
 
