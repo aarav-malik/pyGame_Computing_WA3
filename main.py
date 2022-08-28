@@ -52,12 +52,14 @@ while running:
     draw_bg()
     level1.run()
 
-    if scroll > 10:
+    if scroll > 330:
         portals.draw(screen)
         portals.update(0.25)
         portal.run()
         if player.portalcollision():
             print(1)
+            player = Ship((300, 300), screen, level1.tiles, portals)
+            player.gravity(3)
 
     if player.collision():
         # print("colliding")

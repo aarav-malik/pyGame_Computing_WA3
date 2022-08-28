@@ -22,6 +22,9 @@ class Player(pygame.sprite.Sprite):
         self.y = ppos[1]
         self.sprites.add(self)
 
+    def stage(self, stage):
+        self.stage = stage
+
     def animate(self):
         self.image = pygame.image.load("Graphics/robot {}/{}{}.png".format(self.state, self.state, self.stage))
         self.image = pygame.transform.scale(self.image, (75, 75))

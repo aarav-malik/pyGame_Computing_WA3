@@ -5,3 +5,4 @@ sprites = https://penusbmic.itch.io/sci-fi-character-pack-12
 music = https://tallbeard.itch.io/music-loop-bundle
 portal = https://tenor.com/view/portal-pixel-art-pixelized-spinning-whirlpool-gif-16926051
 animation = https://github.com/clear-code-projects/animation
+ship = https://helianthus-games.itch.io/pixel-art-space-shooter-kit
