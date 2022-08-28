@@ -19,6 +19,7 @@ class Portal(pygame.sprite.Sprite):
         self.current_sprite = 0
         self.image = self.sprites[self.current_sprite]
         self.rect = self.image.get_rect()
+        self.rect = self.rect.inflate_ip(20,20)
         self.x = pos_x
         self.y = pos_y
 
