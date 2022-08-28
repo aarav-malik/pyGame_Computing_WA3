@@ -61,4 +61,4 @@ class Player(pygame.sprite.Sprite):
         self.animate()
         self.surface.blit(self.image, (self.x, self.y))
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
-        pygame.draw.rect(self.surface, colours.white, self.rect, 2)
+        # pygame.draw.rect(self.surface, colours.white, self.rect, 2)

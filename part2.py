@@ -21,7 +21,7 @@ class Portal(pygame.sprite.Sprite):
         self.current_sprite = 0
         self.image = self.sprites[self.current_sprite]
         self.rect = self.image.get_rect()
-        self.rect.inflate_ip(2, 2)
+        self.rect.inflate_ip(-30, 5)
         self.x = pos_x
         self.y = pos_y
 
@@ -35,6 +35,7 @@ class Portal(pygame.sprite.Sprite):
             self.x -= 10
         self.rect.topleft = [self.x, self.y]
 
+
         if self.activated:
             self.current_sprite += speed
             if int(self.current_sprite) >= len(self.sprites):
@@ -42,7 +43,7 @@ class Portal(pygame.sprite.Sprite):
                 self.activated = False
 
         self.image = self.sprites[int(self.current_sprite)]
-        pygame.draw.rect(self.screen, colours.white, self.rect, 2)
+        # pygame.draw.rect(self.screen, colours.white, self.rect, 2)
 
 
 class Ship(pygame.sprite.Sprite):
@@ -96,4 +97,4 @@ class Ship(pygame.sprite.Sprite):
         self.animate()
         self.surface.blit(self.image, (self.x, self.y))
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
-        pygame.draw.rect(self.surface, colours.white, self.rect, 2)
+        # pygame.draw.rect(self.surface, colours.white, self.rect, 2)
