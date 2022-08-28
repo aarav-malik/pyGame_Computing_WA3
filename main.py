@@ -5,6 +5,7 @@ import colours
 from sprite import *
 from pygame.locals import *
 from pygame import mixer
+from part2 import *
 
 scroll = 0
 
@@ -16,6 +17,9 @@ pygame.display.set_icon(logo)
 
 level1 = Level(tile_data, screen)
 player = Player((50, 40), screen, level1.tiles)
+portals = pygame.sprite.Group()
+portal = Portal(300, 300)
+portals.add(portal)
 
 bg_images = []
 for i in range(1, 6):
@@ -35,7 +39,7 @@ def draw_bg():
 mixer.init()
 mixer.music.load("backgroundmusic.wav")
 pygame.mixer.music.set_volume(0.2)
-mixer.music.play()
+mixer.music.play(5)
 
 running = True
 while running:
@@ -47,6 +51,9 @@ while running:
     draw_bg()
     level1.run()
     level1.takein(player.collision())
+    # portals.draw(screen)
+    portals.update(0.25)
+    portal.run()
 
     if player.collision():
         # print("colliding")

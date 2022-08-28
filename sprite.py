@@ -39,6 +39,7 @@ class Player(pygame.sprite.Sprite):
             self.inair = True
         return touch
 
+
     def jump(self):
         if pygame.key.get_pressed()[pygame.K_SPACE] and not self.inair:
             self.y -= 100
