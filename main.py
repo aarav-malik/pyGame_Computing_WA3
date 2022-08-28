@@ -72,7 +72,7 @@ while running:
     key = pygame.key.get_pressed()
     if key[pygame.K_LEFT] and scroll > 0:
         scroll -= 1
-    if key[pygame.K_RIGHT] and scroll < 3000 and player.collision() is None:
+    if key[pygame.K_RIGHT] and scroll < 3000:
         scroll += 1
         index += 1
 
