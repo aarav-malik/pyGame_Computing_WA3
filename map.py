@@ -1,7 +1,7 @@
 import pygame
 from graphics import Tile
 import csv
-
+from collectible import Flask
 tile_map = open("tiled.csv")
 file_reader = csv.reader(tile_map)
 tile_data = list(file_reader)
@@ -12,6 +12,7 @@ tile_size = 60
 class Level:
     def __init__(self, level_data, surface):
         self.tiles = pygame.sprite.Group()
+        self.flasks = pygame.sprite.Group()
         self.surface = surface
         self.setup_level(level_data)
         self.world_shift = 0
@@ -22,16 +23,19 @@ class Level:
                 x = col_index * tile_size
                 y = row_index * tile_size + 225
 
-                if cell != "-1":
-                    tile_type = cell
-                    tile = Tile((x, y), tile_size, tile_type)
-                    self.tiles.add(tile)
+                if cell == 'C':
+                    flask = Flask(x, y, self.surface)
+                    self.flasks.add(flask)
+
+                if cell != "C":
+                    if cell != "-1":
+                        tile_type = cell
+                        tile = Tile((x, y), tile_size, tile_type)
+                        self.tiles.add(tile)
+
 
     def __iter__(self):
         return iter(self.tiles)
-
-    def takein(self, collided):
-        self.collided = collided
 
     def scroll(self):
         if pygame.key.get_pressed()[pygame.K_LEFT]:
@@ -44,5 +48,7 @@ class Level:
     def run(self):
         self.tiles.update(self.world_shift)
         self.tiles.draw(self.surface)
+        self.flasks.update(0.25)
+        self.flasks.draw(self.surface)
         self.scroll()
 
