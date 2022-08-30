@@ -45,7 +45,7 @@ mixer.music.play(100)
 
 pygame.font.init()
 fontObj = pygame.font.Font('Graphics/8-bit font.ttf', 20)
-render = fontObj.render('Flasks Collected: '+ str(collected), True, (0, 0, 0), )
+render = fontObj.render('Flasks Collected: '+str(collected), True, (0, 0, 0), )
 rect = render.get_rect()
 rect.center = (150, 30)
 
@@ -65,11 +65,14 @@ while running:
         portal.run()
         if player.portalcollision():
             print(1)
-            player = Ship((300, 300), screen, level1.tiles, portals)
+            player = Ship((300, 300), screen, level1.tiles, portals, level1.flasks)
             player.gravity(3)
 
     if player.flaskcollection():
         collected += 1
+    render = fontObj.render('Flasks Collected: ' + str(collected), True, (0, 0, 0), )
+    rect = render.get_rect()
+    rect.center = (150, 30)
     screen.blit(render, rect)
 
     if player.collision():
