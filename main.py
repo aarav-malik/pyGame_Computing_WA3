@@ -8,6 +8,7 @@ from pygame import mixer
 from part2 import *
 
 scroll = 0
+collected = 0
 
 screen = pygame.display.set_mode((1300, 646))
 
@@ -20,7 +21,7 @@ portal = Portal(300, 300, screen)
 portals.add(portal)
 
 level1 = Level(tile_data, screen)
-player = Player((60, 300), screen, level1.tiles, portals)
+player = Player((60, 300), screen, level1.tiles, portals, level1.flasks)
 
 bg_images = []
 for i in range(1, 6):
@@ -42,6 +43,12 @@ mixer.music.load("backgroundmusic.wav")
 pygame.mixer.music.set_volume(0.2)
 mixer.music.play(100)
 
+pygame.font.init()
+fontObj = pygame.font.Font('Graphics/8-bit font.ttf', 20)
+render = fontObj.render('Flasks Collected: '+ str(collected), True, (0, 0, 0), )
+rect = render.get_rect()
+rect.center = (150, 30)
+
 running = True
 while running:
     index = 0
@@ -60,6 +67,10 @@ while running:
             print(1)
             player = Ship((300, 300), screen, level1.tiles, portals)
             player.gravity(3)
+
+    if player.flaskcollection():
+        collected += 1
+    screen.blit(render, rect)
 
     if player.collision():
         # print("colliding")

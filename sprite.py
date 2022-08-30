@@ -6,12 +6,13 @@ import random
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self, ppos, surface, level, portals):
+    def __init__(self, ppos, surface, level, portals, flasks):
         pygame.sprite.Sprite.__init__(self)
         self.ppos = ppos
         self.inair = False
         self.collideright = False
         self.level = level
+        self.flasks = flasks
         self.portal = portals
         self.sprites = pygame.sprite.Group()
         self.surface = surface
@@ -47,6 +48,10 @@ class Player(pygame.sprite.Sprite):
     def portalcollision(self):
         enter = pygame.sprite.spritecollideany(self, self.portal)
         return enter
+
+    def flaskcollection(self):
+        collected = pygame.sprite.spritecollide(self, self.flasks, True)
+        return collected
 
     def jump(self):
         if pygame.key.get_pressed()[pygame.K_SPACE] and not self.inair:

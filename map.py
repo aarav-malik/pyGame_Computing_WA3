@@ -2,6 +2,7 @@ import pygame
 from graphics import Tile
 import csv
 from collectible import Flask
+
 tile_map = open("tiled.csv")
 file_reader = csv.reader(tile_map)
 tile_data = list(file_reader)
@@ -33,7 +34,6 @@ class Level:
                         tile = Tile((x, y), tile_size, tile_type)
                         self.tiles.add(tile)
 
-
     def __iter__(self):
         return iter(self.tiles)
 
@@ -48,7 +48,6 @@ class Level:
     def run(self):
         self.tiles.update(self.world_shift)
         self.tiles.draw(self.surface)
-        self.flasks.update(0.25)
+        self.flasks.update(0.25, self.world_shift)
         self.flasks.draw(self.surface)
         self.scroll()
-

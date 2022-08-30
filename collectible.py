@@ -36,7 +36,7 @@ class Flask(pygame.sprite.Sprite):
         self.image = self.sprites[self.current_sprite]
         self.rect = self.image.get_rect(bottomleft=(self.x, self.y))
 
-    def update(self, speed):
+    def update(self, speed, x_shift):
         self.activated = True
 
         if self.activated:
@@ -46,6 +46,7 @@ class Flask(pygame.sprite.Sprite):
                 self.activated = False
 
         self.image = self.sprites[int(self.current_sprite)]
+        self.rect.x += x_shift
 
 
 
