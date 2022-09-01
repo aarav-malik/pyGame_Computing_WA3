@@ -41,53 +41,60 @@ def draw_bg():
 mixer.init()
 mixer.music.load("backgroundmusic.wav")
 pygame.mixer.music.set_volume(0.2)
-mixer.music.play(100)
+mixer.music.play(-1)
 
 pygame.font.init()
-fontObj = pygame.font.Font('Graphics/8-bit font.ttf', 20)
+fontObj = pygame.font.Font('Graphics/FutureMillennium.ttf', 20)
 render = fontObj.render('Flasks Collected: '+str(collected), True, (0, 0, 0), )
 rect = render.get_rect()
 rect.center = (150, 30)
 
 running = True
+screen_state = "Play"
 while running:
-    index = 0
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+    if screen_state == "Play":
+        index = 0
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
 
-    draw_bg()
-    level1.run()
+        draw_bg()
+        level1.run()
 
-    if scroll > 330:
-        portals.draw(screen)
-        portals.update(0.25)
-        portal.run()
-        if player.portalcollision():
-            print(1)
-            player = Ship((300, 300), screen, level1.tiles, portals, level1.flasks)
-            player.gravity(3)
+        if scroll > 330:
+            portals.draw(screen)
+            portals.update(0.25)
+            portal.run()
+            if player.portalcollision():
+                print(1)
+                player = Ship((300, 300), screen, level1.tiles, portals, level1.flasks)
+                player.gravity(3)
 
-    if player.flaskcollection():
-        collected += 1
-    render = fontObj.render('Flasks Collected: ' + str(collected), True, (0, 0, 0), )
-    rect = render.get_rect()
-    rect.center = (150, 30)
-    screen.blit(render, rect)
+        if player.flaskcollection():
+            collected += 1
+        render = fontObj.render('Flasks Collected: ' + str(collected), True, (0, 0, 0), )
+        rect = render.get_rect()
+        rect.center = (150, 30)
+        screen.blit(render, rect)
 
-    if player.collision():
-        # print("colliding")
-        player.gravity(0)
-    else:
-        # print("not colliding")
-        player.gravity(10)
-    player.update()
+        if player.collision():
+            # print("colliding")
+            player.gravity(0)
+        else:
+            # print("not colliding")
+            player.gravity(10)
+        player.update()
 
-    key = pygame.key.get_pressed()
-    if key[pygame.K_LEFT] and scroll > 0:
-        scroll -= 1
-    if key[pygame.K_RIGHT] and scroll < 3000:
-        scroll += 1
-        index += 1
+        key = pygame.key.get_pressed()
+        if key[pygame.K_LEFT] and scroll > 0:
+            scroll -= 1
+        if key[pygame.K_RIGHT] and scroll < 3000:
+            scroll += 1
+            index += 1
+
+    if screen_state == "Start":
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
 
     pygame.display.update()
