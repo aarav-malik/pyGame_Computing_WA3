@@ -6,6 +6,7 @@ from sprite import *
 from pygame.locals import *
 from pygame import mixer
 from part2 import *
+from pyvidplayer import Video
 
 scroll = 0
 collected = 0
@@ -19,6 +20,8 @@ pygame.display.set_icon(logo)
 portals = pygame.sprite.Group()
 portal = Portal(300, 300, screen)
 portals.add(portal)
+
+#intro = Video("intro.mp4")
 
 level1 = Level(tile_data, screen)
 player = Player((60, 300), screen, level1.tiles, portals, level1.flasks)
@@ -92,9 +95,10 @@ while running:
             scroll += 1
             index += 1
 
-    if screen_state == "Start":
+    if screen_state == "Intro":
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+        #intro.draw(screen, (0, 0))
 
     pygame.display.update()
