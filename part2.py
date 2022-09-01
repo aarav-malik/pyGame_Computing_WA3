@@ -87,6 +87,12 @@ class Ship(pygame.sprite.Sprite):
         collected = pygame.sprite.spritecollide(self, self.flasks, True)
         return collected
 
+    def end(self):
+        if self.y < 0 or self.y > 646:
+            return True
+        else:
+            False
+
     def jump(self):
         if pygame.key.get_pressed()[pygame.K_SPACE]:
             self.y -= 50
