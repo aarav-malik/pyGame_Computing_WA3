@@ -8,3 +8,6 @@ animation = https://github.com/clear-code-projects/animation
 ship = https://helianthus-games.itch.io/pixel-art-space-shooter-kit
 flask - https://www.artstation.com/artwork/oOwNKw
 font = https://www.dafont.com/futuremillennium.font
+videoplayer = https://github.com/ree1261/pyvidplayer
+facts = https://www.sciencedirect.com/science/article/pii/S0160412021002415
+gameovergif = https://giphy.com/gifs/universalafrica-back-to-you-matthewmole-matthew-mole-eJ4j2VnYOZU8qJU3Py

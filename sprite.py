@@ -60,6 +60,12 @@ class Player(pygame.sprite.Sprite):
             time.sleep(0.001)
             self.stage = random.randint(1, 8)
 
+    def end(self):
+        if self.y < 0 or self.y > 646:
+            return True
+        else:
+            False
+
     def update(self):
         self.jump()
         self.animate()
