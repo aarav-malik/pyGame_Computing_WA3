@@ -1,10 +1,11 @@
-from pygame import mixer
-
+import pygame
 from map import *
-from part2 import *
+import sprite
+import colours
 from sprite import *
-import random
-from pyvidplayer import Video
+from pygame.locals import *
+from pygame import mixer
+from part2 import *
 
 scroll = 0
 collected = 0
@@ -14,9 +15,6 @@ screen = pygame.display.set_mode((1300, 646))
 pygame.display.set_caption("Industrial")
 logo = pygame.image.load("Graphics/logo.png")
 pygame.display.set_icon(logo)
-
-#intro_vid = Video("intro.mp4")
-#intro_vid.set_size((30, 30))
 
 portals = pygame.sprite.Group()
 portal = Portal(300, 300, screen)
@@ -30,6 +28,7 @@ for i in range(1, 6):
     bg_image = pygame.image.load(f"Graphics/{i}.png")
     bg_images.append(bg_image)
     bg_width = bg_images[0].get_width()
+
 
 def draw_bg():
     for x in range(5):
@@ -46,7 +45,7 @@ mixer.music.play(-1)
 
 pygame.font.init()
 fontObj = pygame.font.Font('Graphics/FutureMillennium.ttf', 20)
-render = fontObj.render('Flasks Collected: ' + str(collected), True, (0, 0, 0), )
+render = fontObj.render('Flasks Collected: '+str(collected), True, (0, 0, 0), )
 rect = render.get_rect()
 rect.center = (150, 30)
 
@@ -93,20 +92,9 @@ while running:
             scroll += 1
             index += 1
 
-        if player.end():
-            screen_state = "End"
-
-    if screen_state == "End":
+    if screen_state == "Start":
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
-        screen.fill(colours.black)
-        go = pygame.image.load("Graphics/Game Over/{}.png".format(random.randint(1, 6)))
-        go = pygame.transform.scale(go, (960, 540))
-        screen.blit(go, (200, 0))
-
-    #if screen_state == "Intro":
-        #intro_vid.draw(screen, (0, 0))
 
     pygame.display.update()
