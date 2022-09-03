@@ -1,5 +1,5 @@
 import pygame
-from graphics import Tile
+from tilecreater import Tile
 import csv
 from collectible import Flask
 
@@ -7,7 +7,7 @@ tile_map = open("tiled.csv")
 file_reader = csv.reader(tile_map)
 tile_data = list(file_reader)
 print(tile_data)
-tile_size = 60
+tile_size = 70
 
 
 class Level:
@@ -40,12 +40,13 @@ class Level:
     def scroll(self):
         if pygame.key.get_pressed()[pygame.K_LEFT]:
             self.world_shift = 2
-        elif pygame.key.get_pressed()[pygame.K_RIGHT]:
+        elif pygame.key.get_pressed()[pygame.K_RIGHT] and self.collision != "side":
             self.world_shift = -10
         else:
             self.world_shift = 0
 
-    def run(self):
+    def run(self, collision):
+        self.collision = collision
         self.tiles.update(self.world_shift)
         self.tiles.draw(self.surface)
         self.flasks.update(0.25, self.world_shift)

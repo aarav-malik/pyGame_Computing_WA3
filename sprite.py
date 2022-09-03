@@ -43,6 +43,9 @@ class Player(pygame.sprite.Sprite):
             self.inair = False
         else:
             self.inair = True
+
+        if len(touch) >= 3:
+            return "side"
         return touch
 
     def portalcollision(self):
@@ -64,11 +67,11 @@ class Player(pygame.sprite.Sprite):
         if self.y < 0 or self.y > 646:
             return True
         else:
-            False
+            return False
 
     def update(self):
         self.jump()
         self.animate()
         self.surface.blit(self.image, (self.x, self.y))
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
-        pygame.draw.rect(self.surface, colours.white, self.rect, 2)
+        # pygame.draw.rect(self.surface, colours.white, self.rect, 2)

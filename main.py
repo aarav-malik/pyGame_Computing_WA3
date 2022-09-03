@@ -6,7 +6,8 @@ from sprite import *
 from pygame.locals import *
 from pygame import mixer
 from part2 import *
-from pyvidplayer import Video
+
+# from pyvidplayer import Video
 
 scroll = 0
 collected = 0
@@ -21,10 +22,10 @@ portals = pygame.sprite.Group()
 portal = Portal(300, 300, screen)
 portals.add(portal)
 
-#intro = Video("intro.mp4")
+# intro = Video("intro.mp4")
 
 level1 = Level(tile_data, screen)
-player = Player((60, 300), screen, level1.tiles, portals, level1.flasks)
+player = Player((70, 300), screen, level1.tiles, portals, level1.flasks)
 
 bg_images = []
 for i in range(1, 6):
@@ -48,12 +49,14 @@ mixer.music.play(-1)
 
 pygame.font.init()
 fontObj = pygame.font.Font('Graphics/FutureMillennium.ttf', 20)
-render = fontObj.render('Flasks Collected: '+str(collected), True, (0, 0, 0), )
+render = fontObj.render('Flasks Collected: ' + str(collected), True, (0, 0, 0), )
 rect = render.get_rect()
 rect.center = (150, 30)
 
 running = True
 screen_state = "Play"
+current_sprite = 0
+
 while running:
     if screen_state == "Play":
         index = 0
@@ -62,14 +65,13 @@ while running:
                 running = False
 
         draw_bg()
-        level1.run()
+        level1.run(player.collision())
 
-        if scroll > 330:
+        if scroll > 360:
             portals.draw(screen)
             portals.update(0.25)
             portal.run()
             if player.portalcollision():
-                print(1)
                 player = Ship((300, 300), screen, level1.tiles, portals, level1.flasks)
                 player.gravity(3)
 
@@ -91,14 +93,43 @@ while running:
         key = pygame.key.get_pressed()
         if key[pygame.K_LEFT] and scroll > 0:
             scroll -= 1
-        if key[pygame.K_RIGHT] and scroll < 3000:
+        if key[pygame.K_RIGHT] and scroll < 3000 and player.collision() != "side":
             scroll += 1
             index += 1
+
+        if player.end():
+            screen_state = "End"
 
     if screen_state == "Intro":
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-        #intro.draw(screen, (0, 0))
+        # intro.draw(screen, (0, 0))
+
+    if screen_state == "End":
+        screen.fill(colours.black)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        frames = []
+
+        for frame in range(37):
+            frames.append(pygame.image.load('Graphics/Game Over/frame_{}.png'.format(frame)))
+
+        current_sprite += 1
+        if int(current_sprite) >= len(frames):
+            current_sprite = 0
+        image = frames[int(current_sprite)]
+        image = pygame.transform.scale(image, (1148, 646))
+
+        screen.blit(image, (100, 0))
+
+        #if pygame.key.get_pressed()[pygame.K_r]:
+            #player = Player((70, 300), screen, level1.tiles, portals, level1.flasks)
+            #portal = Portal(300, 300, screen)
+            #level1 = Level(tile_data, screen)
+
+            #screen_state = "Play"
 
     pygame.display.update()
