@@ -7,7 +7,6 @@ from pygame.locals import *
 from pygame import mixer
 from part2 import *
 
-# from pyvidplayer import Video
 
 scroll = 0
 collected = 0
@@ -22,7 +21,6 @@ portals = pygame.sprite.Group()
 portal = Portal(300, 300, screen)
 portals.add(portal)
 
-# intro = Video("intro.mp4")
 
 level1 = Level(tile_data, screen)
 player = Player((70, 300), screen, level1.tiles, portals, level1.flasks)
@@ -54,10 +52,33 @@ rect = render.get_rect()
 rect.center = (150, 30)
 
 running = True
-screen_state = "Play"
+screen_state = "Intro"
 current_sprite = 0
 
 while running:
+
+    if screen_state == "Intro":
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        screen.fill(colours.white)
+
+        iframes = []
+
+        for iframe in range(38):
+            iframes.append(pygame.image.load('Intro/frame-{}.jpg'.format(iframe+1)))
+
+        current_sprite += 0.25
+        if current_sprite >= len(iframes):
+            current_sprite = 0
+            screen_state = "Play"
+        iimage = iframes[int(current_sprite)]
+        iimage = pygame.transform.scale(iimage, (646, 646))
+
+        screen.blit(iimage, (327, 0))
+
+
+
     if screen_state == "Play":
         index = 0
         for event in pygame.event.get():
@@ -100,12 +121,6 @@ while running:
         if player.end():
             screen_state = "End"
 
-    if screen_state == "Intro":
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-        # intro.draw(screen, (0, 0))
-
     if screen_state == "End":
         screen.fill(colours.black)
         for event in pygame.event.get():
@@ -125,11 +140,11 @@ while running:
 
         screen.blit(image, (100, 0))
 
-        #if pygame.key.get_pressed()[pygame.K_r]:
-            #player = Player((70, 300), screen, level1.tiles, portals, level1.flasks)
-            #portal = Portal(300, 300, screen)
-            #level1 = Level(tile_data, screen)
+        if pygame.key.get_pressed()[pygame.K_r]:
+            player = Player((70, 300), screen, level1.tiles, portals, level1.flasks)
+            portal = Portal(300, 300, screen)
+            level1 = Level(tile_data, screen)
 
-            #screen_state = "Play"
+            screen_state = "Play"
 
     pygame.display.update()
