@@ -3,10 +3,12 @@ from map import *
 import sprite
 import colours
 from sprite import *
-from pygame.locals import *
 from pygame import mixer
 from part2 import *
+from button import Button
 
+pygame.mixer.pre_init(44100, -16, 2, 512)
+mixer.init()
 
 scroll = 0
 collected = 0
@@ -21,9 +23,10 @@ portals = pygame.sprite.Group()
 portal = Portal(300, 300, screen)
 portals.add(portal)
 
-
 level1 = Level(tile_data, screen)
 player = Player((70, 300), screen, level1.tiles, portals, level1.flasks)
+burn_sound = pygame.mixer.Sound('burn.mp3')
+burn_sound.set_volume(0.2)
 
 bg_images = []
 for i in range(1, 6):
@@ -40,9 +43,8 @@ def draw_bg():
             speed += 1
 
 
-mixer.init()
 mixer.music.load("backgroundmusic.wav")
-pygame.mixer.music.set_volume(0.2)
+pygame.mixer.music.set_volume(0)
 mixer.music.play(-1)
 
 pygame.font.init()
@@ -50,6 +52,8 @@ fontObj = pygame.font.Font('Graphics/FutureMillennium.ttf', 20)
 render = fontObj.render('Flasks Collected: ' + str(collected), True, (0, 0, 0), )
 rect = render.get_rect()
 rect.center = (150, 30)
+
+font_b = pygame.font.Font('Graphics/FutureMillennium.ttf', 30)
 
 running = True
 screen_state = "Intro"
@@ -62,22 +66,56 @@ while running:
             if event.type == pygame.QUIT:
                 running = False
         screen.fill(colours.white)
+        burn_sound.play()
 
         iframes = []
 
         for iframe in range(38):
-            iframes.append(pygame.image.load('Intro/frame-{}.jpg'.format(iframe+1)))
+            iframes.append(pygame.image.load('Intro/frame-{}.jpg'.format(iframe + 1)))
 
         current_sprite += 0.25
         if current_sprite >= len(iframes):
             current_sprite = 0
-            screen_state = "Play"
+            screen_state = "Loading"
         iimage = iframes[int(current_sprite)]
         iimage = pygame.transform.scale(iimage, (646, 646))
 
         screen.blit(iimage, (327, 0))
 
+    if screen_state == "Loading":
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        screen.fill(colours.black)
+        lframes = []
 
+        for lframe in range(38):
+            lframes.append(pygame.image.load('Loading/frame-{}.jpg'.format(lframe + 1)))
+
+        current_sprite += 1
+        if current_sprite >= len(lframes):
+            current_sprite = 0
+            screen_state = "Play"
+        limage = lframes[int(current_sprite)]
+        limage = pygame.transform.scale(limage, (1148, 646))
+
+        screen.blit(limage, (100, 0))
+
+    if screen_state == "Menu":
+        screen.fill(colours.black)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        c_pos = pygame.mouse.get_pos()
+        play_b = Button(image=pygame.image.load("Graphics/button.png"), pos=(640, 250),
+                        text_input="PLAY", font=font_b, base_color="#3246a8", hovering_color="White")
+        options_b = Button(image=pygame.image.load("Graphics/button.png"), pos=(640, 400),
+                           text_input="OPTIONS", font=font_b, base_color="#3246a8", hovering_color="White")
+        quit_b = Button(image=pygame.image.load("Graphics/button.png"), pos=(640, 550),
+                        text_input="QUIT", font=font_b, base_color="#3246a8", hovering_color="White")
+        for button in [play_b, options_b, quit_b]:
+            button.changeColor(c_pos)
+            button.update(screen)
 
     if screen_state == "Play":
         index = 0
@@ -87,6 +125,7 @@ while running:
 
         draw_bg()
         level1.run(player.collision())
+        pygame.mixer.music.set_volume(0.2)
 
         if scroll > 360:
             portals.draw(screen)
