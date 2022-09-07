@@ -68,7 +68,7 @@ rect.center = (150, 30)
 font_b = pygame.font.Font('Graphics/FutureMillennium.ttf', 30)
 
 running = True
-screen_state = "End"
+screen_state = "Intro"
 current_sprite = 0
 
 while running:
