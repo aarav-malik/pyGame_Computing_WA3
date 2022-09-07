@@ -53,7 +53,6 @@ def draw_bg2():
             screen.blit(bg, ((x * bg_width) - scroll2 * speed, 0))
             speed += 1
 
-
 mixer.music.load("backgroundmusic.wav")
 pygame.mixer.music.set_volume(0)
 mixer.music.play(-1)
@@ -66,6 +65,9 @@ def font_sizer(size):
 running = True
 screen_state = "Intro"
 current_sprite = 0
+icurrent_sprite = 0
+lgcurrent_sprite = 0
+lcurrent_sprite = 0
 
 while running:
 
@@ -80,14 +82,54 @@ while running:
         for iframe in range(38):
             iframes.append(pygame.image.load('Intro/frame-{}.jpg'.format(iframe + 1)))
 
-        current_sprite += 0.25
-        if current_sprite >= len(iframes):
-            current_sprite = 0
+        icurrent_sprite += 0.25
+        if icurrent_sprite >= len(iframes):
+            icurrent_sprite = 0
             screen_state = "Menu"
-        iimage = iframes[int(current_sprite)]
+        iimage = iframes[int(icurrent_sprite)]
         iimage = pygame.transform.scale(iimage, (646, 646))
 
         screen.blit(iimage, (327, 0))
+
+    if screen_state == "Menu":
+        screen.fill(colours.black)
+        pygame.mixer.music.set_volume(0.2)
+        draw_bg2()
+        scroll2 += 1
+        if scroll2 > 1100:
+            scroll2 = 0
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        c_pos = pygame.mouse.get_pos()
+        play_b = Button(image=pygame.image.load("Graphics/button.png"), pos=(640, 400),
+                        text_input="PLAY", font=font_sizer(30), base_color="#3246a8", hovering_color="White")
+        quit_b = Button(image=pygame.image.load("Graphics/button.png"), pos=(640, 550),
+                        text_input="QUIT", font=font_sizer(30), base_color="#3246a8", hovering_color="White")
+        for button in [play_b, quit_b]:
+            button.changeColor(c_pos)
+            button.update(screen)
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if play_b.checkForInput(c_pos):
+                screen_state = "Loading"
+            if quit_b.checkForInput(c_pos):
+                pygame.quit()
+                sys.exit()
+
+        lgframes = []
+
+        for lgframe in range(150):
+            lgframes.append(pygame.image.load('Logo/unscreen-{}.png'.format(lgframe+1)))
+
+        lgcurrent_sprite += 1
+        if int(lgcurrent_sprite) >= len(lgframes):
+            current_sprite = 0
+        lgimage = lgframes[int(lgcurrent_sprite)]
+        lgimage = lgimage.convert_alpha()
+        lgimage.set_colorkey((253, 255, 252))
+        lgimage = pygame.transform.scale(lgimage, (586, 356))
+
+        screen.blit(lgimage, (350, 0))
 
     if screen_state == "Loading":
         for event in pygame.event.get():
@@ -99,43 +141,14 @@ while running:
         for lframe in range(38):
             lframes.append(pygame.image.load('Loading/frame-{}.jpg'.format(lframe + 1)))
 
-        current_sprite += 1
-        if current_sprite >= len(lframes):
-            current_sprite = 0
+        lcurrent_sprite += 1
+        if lcurrent_sprite >= len(lframes):
+            lcurrent_sprite = 0
             screen_state = "Play"
-        limage = lframes[int(current_sprite)]
+        limage = lframes[int(lcurrent_sprite)]
         limage = pygame.transform.scale(limage, (1148, 646))
 
         screen.blit(limage, (100, 0))
-
-    if screen_state == "Menu":
-        screen.fill(colours.black)
-        name = font_sizer(50).render("WELCOME", False, (55, 68, 110))
-        pygame.mixer.music.set_volume(0.2)
-        draw_bg2()
-        scroll2 += 1
-        if scroll2 > 1100:
-            scroll2 = 0
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-        c_pos = pygame.mouse.get_pos()
-        play_b = Button(image=pygame.image.load("Graphics/button.png"), pos=(640, 250),
-                        text_input="PLAY", font=font_sizer(30), base_color="#3246a8", hovering_color="White")
-        options_b = Button(image=pygame.image.load("Graphics/button.png"), pos=(640, 400),
-                           text_input="OPTIONS", font=font_sizer(30), base_color="#3246a8", hovering_color="White")
-        quit_b = Button(image=pygame.image.load("Graphics/button.png"), pos=(640, 550),
-                        text_input="QUIT", font=font_sizer(30), base_color="#3246a8", hovering_color="White")
-        for button in [play_b, options_b, quit_b]:
-            button.changeColor(c_pos)
-            button.update(screen)
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if play_b.checkForInput(c_pos):
-                screen_state = "Loading"
-            if quit_b.checkForInput(c_pos):
-                pygame.quit()
-                sys.exit()
-        #screen.blit(name, (350, 100))
 
     if screen_state == "Play":
         index = 0
