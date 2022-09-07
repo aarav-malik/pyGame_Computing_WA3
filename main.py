@@ -1,3 +1,6 @@
+import random
+import sys
+
 import pygame
 from map import *
 import sprite
@@ -11,6 +14,7 @@ pygame.mixer.pre_init(44100, -16, 2, 512)
 mixer.init()
 
 scroll = 0
+scroll2 = 0
 collected = 0
 
 screen = pygame.display.set_mode((1300, 646))
@@ -43,6 +47,14 @@ def draw_bg():
             speed += 1
 
 
+def draw_bg2():
+    for x in range(5):
+        speed = 0.3
+        for bg in bg_images:
+            screen.blit(bg, ((x * bg_width) - scroll2 * speed, 0))
+            speed += 1
+
+
 mixer.music.load("backgroundmusic.wav")
 pygame.mixer.music.set_volume(0)
 mixer.music.play(-1)
@@ -56,7 +68,7 @@ rect.center = (150, 30)
 font_b = pygame.font.Font('Graphics/FutureMillennium.ttf', 30)
 
 running = True
-screen_state = "Intro"
+screen_state = "End"
 current_sprite = 0
 
 while running:
@@ -76,7 +88,7 @@ while running:
         current_sprite += 0.25
         if current_sprite >= len(iframes):
             current_sprite = 0
-            screen_state = "Loading"
+            screen_state = "Menu"
         iimage = iframes[int(current_sprite)]
         iimage = pygame.transform.scale(iimage, (646, 646))
 
@@ -103,6 +115,11 @@ while running:
 
     if screen_state == "Menu":
         screen.fill(colours.black)
+        pygame.mixer.music.set_volume(0.2)
+        draw_bg2()
+        scroll2 += 1
+        if scroll2 > 1100:
+            scroll2 = 0
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -116,6 +133,12 @@ while running:
         for button in [play_b, options_b, quit_b]:
             button.changeColor(c_pos)
             button.update(screen)
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if play_b.checkForInput(c_pos):
+                screen_state = "Loading"
+            if quit_b.checkForInput(c_pos):
+                pygame.quit()
+                sys.exit()
 
     if screen_state == "Play":
         index = 0
@@ -125,7 +148,6 @@ while running:
 
         draw_bg()
         level1.run(player.collision())
-        pygame.mixer.music.set_volume(0.2)
 
         if scroll > 360:
             portals.draw(screen)
@@ -178,12 +200,12 @@ while running:
         image = pygame.transform.scale(image, (1148, 646))
 
         screen.blit(image, (100, 0))
+        respawn = fontObj.render("Press R to Respawn", False, (255, 255, 255))
+        select = random.randint(1, 2)
+        if select == 1:
+            screen.blit(respawn, (570, 600))
 
         if pygame.key.get_pressed()[pygame.K_r]:
-            player = Player((70, 300), screen, level1.tiles, portals, level1.flasks)
-            portal = Portal(300, 300, screen)
-            level1 = Level(tile_data, screen)
-
-            screen_state = "Play"
+            screen_state = "Loading"
 
     pygame.display.update()
