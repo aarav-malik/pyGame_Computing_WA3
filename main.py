@@ -64,7 +64,7 @@ def font_sizer(size):
 
 
 running = True
-screen_state = "Menu"
+screen_state = "Intro"
 current_sprite = 0
 
 while running:
