@@ -12,6 +12,7 @@ from button import Button
 
 pygame.mixer.pre_init(44100, -16, 2, 512)
 mixer.init()
+pygame.font.init()
 
 scroll = 0
 scroll2 = 0
@@ -29,8 +30,6 @@ portals.add(portal)
 
 level1 = Level(tile_data, screen)
 player = Player((70, 300), screen, level1.tiles, portals, level1.flasks)
-burn_sound = pygame.mixer.Sound('burn.mp3')
-burn_sound.set_volume(0.2)
 
 bg_images = []
 for i in range(1, 6):
@@ -59,16 +58,13 @@ mixer.music.load("backgroundmusic.wav")
 pygame.mixer.music.set_volume(0)
 mixer.music.play(-1)
 
-pygame.font.init()
-fontObj = pygame.font.Font('Graphics/FutureMillennium.ttf', 20)
-render = fontObj.render('Flasks Collected: ' + str(collected), True, (0, 0, 0), )
-rect = render.get_rect()
-rect.center = (150, 30)
 
-font_b = pygame.font.Font('Graphics/FutureMillennium.ttf', 30)
+def font_sizer(size):
+    return pygame.font.Font('Graphics/FutureMillennium.ttf', size)
+
 
 running = True
-screen_state = "Intro"
+screen_state = "Menu"
 current_sprite = 0
 
 while running:
@@ -78,7 +74,6 @@ while running:
             if event.type == pygame.QUIT:
                 running = False
         screen.fill(colours.white)
-        burn_sound.play()
 
         iframes = []
 
@@ -115,6 +110,7 @@ while running:
 
     if screen_state == "Menu":
         screen.fill(colours.black)
+        name = font_sizer(50).render("WELCOME", False, (55, 68, 110))
         pygame.mixer.music.set_volume(0.2)
         draw_bg2()
         scroll2 += 1
@@ -125,11 +121,11 @@ while running:
                 running = False
         c_pos = pygame.mouse.get_pos()
         play_b = Button(image=pygame.image.load("Graphics/button.png"), pos=(640, 250),
-                        text_input="PLAY", font=font_b, base_color="#3246a8", hovering_color="White")
+                        text_input="PLAY", font=font_sizer(30), base_color="#3246a8", hovering_color="White")
         options_b = Button(image=pygame.image.load("Graphics/button.png"), pos=(640, 400),
-                           text_input="OPTIONS", font=font_b, base_color="#3246a8", hovering_color="White")
+                           text_input="OPTIONS", font=font_sizer(30), base_color="#3246a8", hovering_color="White")
         quit_b = Button(image=pygame.image.load("Graphics/button.png"), pos=(640, 550),
-                        text_input="QUIT", font=font_b, base_color="#3246a8", hovering_color="White")
+                        text_input="QUIT", font=font_sizer(30), base_color="#3246a8", hovering_color="White")
         for button in [play_b, options_b, quit_b]:
             button.changeColor(c_pos)
             button.update(screen)
@@ -139,6 +135,7 @@ while running:
             if quit_b.checkForInput(c_pos):
                 pygame.quit()
                 sys.exit()
+        #screen.blit(name, (350, 100))
 
     if screen_state == "Play":
         index = 0
@@ -159,7 +156,7 @@ while running:
 
         if player.flaskcollection():
             collected += 1
-        render = fontObj.render('Flasks Collected: ' + str(collected), True, (0, 0, 0), )
+        render = font_sizer(20).render('Flasks Collected: ' + str(collected), True, (0, 0, 0), )
         rect = render.get_rect()
         rect.center = (150, 30)
         screen.blit(render, rect)
@@ -200,7 +197,7 @@ while running:
         image = pygame.transform.scale(image, (1148, 646))
 
         screen.blit(image, (100, 0))
-        respawn = fontObj.render("Press R to Respawn", False, (255, 255, 255))
+        respawn = font_sizer(20).render("Press R to Respawn", False, (255, 255, 255))
         select = random.randint(1, 2)
         if select == 1:
             screen.blit(respawn, (570, 600))
