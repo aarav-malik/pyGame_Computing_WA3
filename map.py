@@ -6,9 +6,7 @@ from collectible import Flask
 tile_map = open("tiled.csv")
 file_reader = csv.reader(tile_map)
 tile_data = list(file_reader)
-print(tile_data)
 tile_size = 70
-
 
 class Level:
     def __init__(self, level_data, surface):

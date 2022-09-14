@@ -68,7 +68,7 @@ def font_sizer(size):
 
 
 running = True
-screen_state = "Play"
+screen_state = "Finish"
 current_sprite = 0
 icurrent_sprite = 0
 lgcurrent_sprite = 0
@@ -210,6 +210,27 @@ while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+        t = font_sizer(100).render('Mission Completed', False, (255, 255, 255))
+        t2 = font_sizer(100).render('Welcome Back ', False, (255, 255, 255))
+        t3 = font_sizer(100).render('\n', False, (255, 255, 255))
+
+        select = random.randint(1, 5)
+        screen.blit(t, (150, 200))
+        screen.blit(t2, (180, 300))
+        if select == 2:
+            screen.blit(t3, (950, 300))
+
+        c_pos = pygame.mouse.get_pos()
+        quit_b = Button(image=pygame.image.load("Graphics/button.png"), pos=(640, 550),
+                        text_input="QUIT", font=font_sizer(30), base_color="#3246a8", hovering_color="White")
+
+        for button in [quit_b]:
+            button.changeColor(c_pos)
+            button.update(screen)
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if quit_b.checkForInput(c_pos):
+                pygame.quit()
+                sys.exit()
 
     if screen_state == "End":
         screen.fill(colours.black)
