@@ -29,7 +29,7 @@ portal = Portal(300, 300, screen)
 portals.add(portal)
 
 earths = pygame.sprite.Group()
-earth = Earth(300, 300, screen)
+earth = Earth(600, 300, screen)
 earths.add(earth)
 
 level1 = Level(tile_data, screen)
@@ -68,7 +68,7 @@ def font_sizer(size):
 
 
 running = True
-screen_state = "Intro"
+screen_state = "Play"
 current_sprite = 0
 icurrent_sprite = 0
 lgcurrent_sprite = 0
@@ -168,9 +168,10 @@ while running:
             portals.update(0.25)
             portal.run()
             if player.portalcollision():
+                time.sleep(0.3)
                 player = Ship((300, 300), screen, level1.tiles, portals, level1.flasks, earths)
                 player.gravity(3)
-        print(scroll)
+
         if scroll > 750:
             earths.draw(screen)
             earths.update(0.25)
@@ -191,13 +192,6 @@ while running:
             player.gravity(10)
         player.update()
 
-        # if player.finish():
-        #     screen_state = "Finish"
-        #     screen.fill(colours.black)
-        #     for event in pygame.event.get():
-        #         if event.type == pygame.QUIT:
-        #             running = False
-
         key = pygame.key.get_pressed()
         if key[pygame.K_LEFT] and scroll > 0:
             scroll -= 0.5
@@ -207,6 +201,15 @@ while running:
 
         if player.end():
             screen_state = "End"
+        if player.finish():
+            time.sleep(1)
+            screen_state = "Finish"
+
+    if screen_state == "Finish":
+        screen.fill(colours.black)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
 
     if screen_state == "End":
         screen.fill(colours.black)

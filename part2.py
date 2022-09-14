@@ -71,7 +71,7 @@ class Earth(pygame.sprite.Sprite):
                 self.activated = False
 
         self.image = self.sprites[int(self.current_sprite)]
-        self. image = pygame.transform.scale(self.image, (150, 150))
+        # pygame.draw.rect(self.screen, colours.white, self.rect, 2)
 
 
 class Ship(pygame.sprite.Sprite):
@@ -118,14 +118,10 @@ class Ship(pygame.sprite.Sprite):
         return collected
 
     def finish(self):
-        finish = pygame.sprite.spritecollideany(self, self.earth)
-        return finish
+        return pygame.sprite.spritecollide(self, self.earth, False)
 
     def end(self):
-        if self.y < 0 or self.y > 646:
-            return True
-        else:
-            False
+        return self.y < 0 or self.y > 646
 
     def jump(self):
         if pygame.key.get_pressed()[pygame.K_SPACE]:

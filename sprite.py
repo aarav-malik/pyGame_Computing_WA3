@@ -65,14 +65,10 @@ class Player(pygame.sprite.Sprite):
             self.stage = random.randint(1, 8)
 
     def end(self):
-        if self.y < 0 or self.y > 646:
-            return True
-        else:
-            return False
+        return self.y < 0 or self.y > 646
 
     def finish(self):
-        finish = pygame.sprite.spritecollideany(self, self.earth)
-        return finish
+        return pygame.sprite.spritecollide(self, self.earth, False)
 
     def reset(self):
         self.x = 70
