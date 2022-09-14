@@ -6,7 +6,7 @@ import random
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self, ppos, surface, level, portals, flasks):
+    def __init__(self, ppos, surface, level, portals, flasks, earths):
         pygame.sprite.Sprite.__init__(self)
         self.ppos = ppos
         self.inair = False
@@ -14,6 +14,7 @@ class Player(pygame.sprite.Sprite):
         self.level = level
         self.flasks = flasks
         self.portal = portals
+        self.earth = earths
         self.sprites = pygame.sprite.Group()
         self.surface = surface
         self.state = "move"
@@ -68,6 +69,14 @@ class Player(pygame.sprite.Sprite):
             return True
         else:
             return False
+
+    def finish(self):
+        finish = pygame.sprite.spritecollideany(self, self.earth)
+        return finish
+
+    def reset(self):
+        self.x = 70
+        self.y = 300
 
     def update(self):
         self.jump()

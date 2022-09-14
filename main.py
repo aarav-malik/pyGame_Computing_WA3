@@ -28,8 +28,12 @@ portals = pygame.sprite.Group()
 portal = Portal(300, 300, screen)
 portals.add(portal)
 
+earths = pygame.sprite.Group()
+earth = Earth(300, 300, screen)
+earths.add(earth)
+
 level1 = Level(tile_data, screen)
-player = Player((70, 300), screen, level1.tiles, portals, level1.flasks)
+player = Player((70, 300), screen, level1.tiles, portals, level1.flasks, earths)
 
 bg_images = []
 for i in range(1, 6):
@@ -52,6 +56,7 @@ def draw_bg2():
         for bg in bg_images:
             screen.blit(bg, ((x * bg_width) - scroll2 * speed, 0))
             speed += 1
+
 
 mixer.music.load("backgroundmusic.wav")
 pygame.mixer.music.set_volume(0)
@@ -119,11 +124,11 @@ while running:
         lgframes = []
 
         for lgframe in range(150):
-            lgframes.append(pygame.image.load('Logo/unscreen-{}.png'.format(lgframe+1)))
+            lgframes.append(pygame.image.load('Logo/unscreen-{}.png'.format(lgframe + 1)))
 
         lgcurrent_sprite += 1
         if int(lgcurrent_sprite) >= len(lgframes):
-            current_sprite = 0
+            lgcurrent_sprite = 0
         lgimage = lgframes[int(lgcurrent_sprite)]
         lgimage = lgimage.convert_alpha()
         lgimage.set_colorkey((253, 255, 252))
@@ -155,7 +160,6 @@ while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
         draw_bg()
         level1.run(player.collision())
 
@@ -164,8 +168,13 @@ while running:
             portals.update(0.25)
             portal.run()
             if player.portalcollision():
-                player = Ship((300, 300), screen, level1.tiles, portals, level1.flasks)
+                player = Ship((300, 300), screen, level1.tiles, portals, level1.flasks, earths)
                 player.gravity(3)
+        print(scroll)
+        if scroll > 750:
+            earths.draw(screen)
+            earths.update(0.25)
+            earth.run()
 
         if player.flaskcollection():
             collected += 1
@@ -182,9 +191,16 @@ while running:
             player.gravity(10)
         player.update()
 
+        # if player.finish():
+        #     screen_state = "Finish"
+        #     screen.fill(colours.black)
+        #     for event in pygame.event.get():
+        #         if event.type == pygame.QUIT:
+        #             running = False
+
         key = pygame.key.get_pressed()
         if key[pygame.K_LEFT] and scroll > 0:
-            scroll -= 1
+            scroll -= 0.5
         if key[pygame.K_RIGHT] and scroll < 3000 and player.collision() != "side":
             scroll += 1
             index += 1

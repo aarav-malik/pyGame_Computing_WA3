@@ -39,8 +39,43 @@ class Portal(pygame.sprite.Sprite):
         # pygame.draw.rect(self.screen, colours.white, self.rect, 2)
 
 
+class Earth(pygame.sprite.Sprite):
+    def __init__(self, pos_x, pos_y, screen):
+        super().__init__()
+        self.activated = False
+        self.screen = screen
+        self.sprites = []
+        for image in range(80):
+            self.sprites.append(pygame.image.load('Graphics/earth/{}.png'.format(image)))
+        self.current_sprite = 0
+        self.image = self.sprites[self.current_sprite]
+        self.pos = (pos_x, pos_y)
+        self.rect = self.image.get_bounding_rect()
+        self.x = pos_x
+        self.y = pos_y
+
+    def run(self):
+        self.activated = True
+
+    def update(self, speed):
+
+        key = pygame.key.get_pressed()
+        if key[pygame.K_RIGHT]:
+            self.x -= 5
+        self.rect.topleft = [self.x, self.y]
+
+        if self.activated:
+            self.current_sprite += speed
+            if int(self.current_sprite) >= len(self.sprites):
+                self.current_sprite = 0
+                self.activated = False
+
+        self.image = self.sprites[int(self.current_sprite)]
+        self. image = pygame.transform.scale(self.image, (150, 150))
+
+
 class Ship(pygame.sprite.Sprite):
-    def __init__(self, ppos, surface, level, portals, flasks):
+    def __init__(self, ppos, surface, level, portals, flasks, earths):
         pygame.sprite.Sprite.__init__(self)
         self.ppos = ppos
         self.inair = False
@@ -48,6 +83,7 @@ class Ship(pygame.sprite.Sprite):
         self.level = level
         self.portal = portals
         self.flasks = flasks
+        self.earth = earths
         self.sprites = pygame.sprite.Group()
         self.surface = surface
         self.stage = 1
@@ -80,6 +116,10 @@ class Ship(pygame.sprite.Sprite):
     def flaskcollection(self):
         collected = pygame.sprite.spritecollide(self, self.flasks, True)
         return collected
+
+    def finish(self):
+        finish = pygame.sprite.spritecollideany(self, self.earth)
+        return finish
 
     def end(self):
         if self.y < 0 or self.y > 646:
