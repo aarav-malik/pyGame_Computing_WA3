@@ -68,7 +68,7 @@ def font_sizer(size):
 
 
 running = True
-screen_state = "Finish"
+screen_state = "Intro"
 current_sprite = 0
 icurrent_sprite = 0
 lgcurrent_sprite = 0
