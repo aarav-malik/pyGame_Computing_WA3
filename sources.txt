@@ -12,3 +12,5 @@ facts = https://www.sciencedirect.com/science/article/pii/S0160412021002415
 gameovergif = https://giphy.com/gifs/universalafrica-back-to-you-matthewmole-matthew-mole-eJ4j2VnYOZU8qJU3Py\
 loadinggif = https://i.gifer.com/463f.gif
 *menu = https://github.com/baraltech/Menu-System-PyGame
+arrows = https://www.kindpng.com/imgv/hRxibhJ_pixel-arrow-keys-png-transparent-png/
+spacebar = http://pixelartmaker.com/art/bbda26417528649

@@ -1,6 +1,5 @@
 import random
 import sys
-
 import pygame
 from map import *
 import sprite
@@ -90,11 +89,35 @@ while running:
         icurrent_sprite += 0.25
         if icurrent_sprite >= len(iframes):
             icurrent_sprite = 0
-            screen_state = "Menu"
+            screen_state = "Tutorial"
         iimage = iframes[int(icurrent_sprite)]
         iimage = pygame.transform.scale(iimage, (646, 646))
 
         screen.blit(iimage, (327, 0))
+
+    if screen_state == "Tutorial":
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        screen.fill(colours.black)
+        tu1 = font_sizer(20).render("To move right", False, (255, 255, 255))
+        tu2 = font_sizer(20).render("To move left", False, (255, 255, 255))
+        tu3 = font_sizer(20).render("To jump", False, (255, 255, 255))
+        tu4 = font_sizer(20).render("Press enter to continue", False, (255, 255, 255))
+
+        lkey = pygame.image.load('Graphics/leftkey.png')
+        rkey = pygame.image.load('Graphics/rightkey.png')
+        skey = pygame.image.load('Graphics/spacebar.png')
+        screen.blit(tu1, (370, 400))
+        screen.blit(tu2, (790, 400))
+        screen.blit(tu3, (600, 100))
+        screen.blit(tu4, (0, 0))
+        screen.blit(lkey, (350, 200))
+        screen.blit(rkey, (350, 200))
+        screen.blit(skey, (130, 50))
+
+        if pygame.key.get_pressed()[pygame.K_RETURN]:
+            screen_state = "Menu"
 
     if screen_state == "Menu":
         screen.fill(colours.black)
@@ -250,12 +273,12 @@ while running:
         image = pygame.transform.scale(image, (1148, 646))
 
         screen.blit(image, (100, 0))
-        respawn = font_sizer(20).render("Press R to Respawn", False, (255, 255, 255))
-        select = random.randint(1, 2)
-        if select == 1:
-            screen.blit(respawn, (570, 600))
-
-        if pygame.key.get_pressed()[pygame.K_r]:
-            screen_state = "Loading"
+        # respawn = font_sizer(20).render("Press R to Respawn", False, (255, 255, 255))
+        # select = random.randint(1, 2)
+        # if select == 1:
+        #     screen.blit(respawn, (570, 600))
+        #
+        # if pygame.key.get_pressed()[pygame.K_r]:
+        #     screen_state = "Loading"
 
     pygame.display.update()
