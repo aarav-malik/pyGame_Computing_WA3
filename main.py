@@ -131,9 +131,9 @@ while running:
                 running = False
         c_pos = pygame.mouse.get_pos()
         play_b = Button(image=pygame.image.load("Graphics/button.png"), pos=(640, 400),
-                        text_input="PLAY", font=font_sizer(30), base_color="#3246a8", hovering_color="White")
+                        text_input="Play", font=font_sizer(30), base_color="#3246a8", hovering_color="White")
         quit_b = Button(image=pygame.image.load("Graphics/button.png"), pos=(640, 550),
-                        text_input="QUIT", font=font_sizer(30), base_color="#3246a8", hovering_color="White")
+                        text_input="Quit", font=font_sizer(30), base_color="#3246a8", hovering_color="White")
         for button in [play_b, quit_b]:
             button.changeColor(c_pos)
             button.update(screen)
@@ -245,7 +245,7 @@ while running:
 
         c_pos = pygame.mouse.get_pos()
         quit_b = Button(image=pygame.image.load("Graphics/button.png"), pos=(640, 550),
-                        text_input="QUIT", font=font_sizer(30), base_color="#3246a8", hovering_color="White")
+                        text_input="quit", font=font_sizer(30), base_color="#3246a8", hovering_color="White")
 
         for button in [quit_b]:
             button.changeColor(c_pos)
