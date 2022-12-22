@@ -1,1 +1,3 @@
-# pyGame_Computing_WA3
+# Project: Fallout
+Made for my WA3 computing project 2022
+
